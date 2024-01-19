@@ -1,4 +1,4 @@
-bot.pyimport json
+import json
 from collections import Counter
 import flask
 from flask import request
