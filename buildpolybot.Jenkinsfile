@@ -17,13 +17,5 @@ pipeline {
                 '''
             }
         }
-
-        stage('Trigger Deploy') {
-            steps {
-                build job: 'PolybotDeploy', wait: false, parameters: [
-                    string(name: 'POLYBOT_IMAGE_URL', value: '$ECR_URL/$IMAGE_NAME:$BUILD_NUMBER')
-                ]
-            }
-        }
     }
 }
