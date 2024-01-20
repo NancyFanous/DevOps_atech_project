@@ -5,7 +5,6 @@ pipeline {
         ECR_URL = '933060838752.dkr.ecr.us-east-1.amazonaws.com'
         IMAGE_NAME = 'polybot_nancyf'
     }
-
     stages {
         stage('Build') {
             steps {
