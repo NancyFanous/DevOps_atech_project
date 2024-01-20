@@ -17,10 +17,7 @@ pipeline {
         }
 
         stage('Build') {
-            when {
-                changeset "polybot/**"
 
-            }
             steps {
                 script {
                     sh """
