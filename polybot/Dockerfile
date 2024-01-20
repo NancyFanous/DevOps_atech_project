@@ -2,7 +2,7 @@ FROM python:3.8-slim
 WORKDIR /usr/src/app
 RUN pip install --upgrade pip
 COPY requirements.txt .
-RUN pip install -r requirements.txt
+RUN pip install -r polybot/requirements.txt
 
 COPY .. .
 COPY /polybot/YOURPUBLIC.pem .
