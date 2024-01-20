@@ -4,7 +4,7 @@ pipeline {
     environment{
         ECR_URL = '933060838752.dkr.ecr.us-east-1.amazonaws.com'
         IMAGE_NAME = 'polybot_nancyf'
-        DOCKERFILE_PATH = 'https://github.com/NancyFanous/DevOps_atech_project.git/polybot'
+        DOCKERFILE_PATH = 'polybot/Dockerfile'
     }
     stages {
         stage('Build') {
