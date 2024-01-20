@@ -17,14 +17,17 @@ pipeline {
         }
 
         stage('Build') {
+            when {
+                changeset "polybot/**"
+            }
             steps {
                 script {
-                    sh '''
+                    sh """
                     aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin $ECR_URL
                     docker build -t $IMAGE_NAME:$BUILD_NUMBER -f $DOCKERFILE_PATH .
                     docker tag $IMAGE_NAME:$BUILD_NUMBER $ECR_URL/$IMAGE_NAME:$BUILD_NUMBER
                     docker push $ECR_URL/$IMAGE_NAME:$BUILD_NUMBER
-                    '''
+                    """
                 }
             }
         }
