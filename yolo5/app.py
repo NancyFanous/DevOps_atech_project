@@ -64,7 +64,7 @@ def consume():
             # TODO Uploads the predicted image (predicted_img_path) to S3 (be careful not to override the original image).
 
             the_image = original_img_path[:-4] + "_predicted.jpg"
-            s3.upload_file(str(predicted_img_path), images_bucket, the_image )
+            s3.upload_file(str(predicted_img_path), images_bucket, the_image)
 
             # Parse prediction labels and create a summary
             pred_summary_path = Path(f'static/data/{prediction_id}/labels/{original_img_path.split(".")[0]}.txt')
