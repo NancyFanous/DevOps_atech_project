@@ -7,6 +7,13 @@ pipeline {
         DOCKERFILE_PATH = 'polybot/Dockerfile'
     }
     stages {
+        stage('Checkout') {
+             steps {
+                script {
+                    checkout scm
+                }
+            }
+        }
         stage('Build') {
             steps {
                 sh '''
