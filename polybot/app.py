@@ -41,7 +41,7 @@ def results():
     prediction_id = request.args.get('prediction_id')
 
     # TODO use the prediction_id to retrieve results from DynamoDB and send to the end-user
-    dynamodb = boto3.resource('dynamodb', region_name='eu-north-4')
+    dynamodb = boto3.resource('dynamodb', region_name='eu-north-1')
     table = dynamodb.Table('nancyf_tb')
 
     response_item = table.get_item(
