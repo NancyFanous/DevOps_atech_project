@@ -88,7 +88,7 @@ class ObjectDetectionBot(Bot):
                     MessageBody=json_message_body)
 
             # TODO send message to the Telegram end-user (e.g. Your image is being processed. Please wait...)
-            self.send_text(chat_id=msg['chat']['id'], text="Your image is being processed. Please wait...mmm")
+            self.send_text(chat_id=msg['chat']['id'], text="Your image is being processed. Please wait...")
 
 
 
