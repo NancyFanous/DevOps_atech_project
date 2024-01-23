@@ -37,9 +37,12 @@ pipeline {
                 changeset "polybot/**"
             }
             steps {
-                build job: 'PolybotDeploy', wait: false, parameters: [
-                    string(name: 'POLYBOT_IMAGE_BUILD_NUM', value: "$BUILD_NUMBER")
-                ]
+                script {
+                    def buildNumber = BUILD_NUMBER
+                    build job: 'PolybotDeploy', wait: false, parameters: [
+                        string(name: 'POLYBOT_IMAGE_BUILD_NUM', value: buildNumber)
+                    ]
+                }
             }
         }
     }
