@@ -17,6 +17,9 @@ pipeline {
         }
 
         stage('Build') {
+            when {
+                changeset "polybot/**"
+            }
             steps {
                 script {
                     sh """
@@ -26,6 +29,17 @@ pipeline {
                     docker push $ECR_URL/$IMAGE_NAME:$BUILD_NUMBER
                     """
                 }
+            }
+        }
+
+        stage('Trigger Deploy') {
+            when {
+                changeset "polybot/**"
+            }
+            steps {
+                build job: 'PolybotDeploy', wait: false, parameters: [
+                    string(name: 'POLYBOT_IMAGE_BUILD_NUM', value: "$BUILD_NUMBER")
+                ]
             }
         }
     }

@@ -4,7 +4,7 @@ RUN pip install --upgrade pip
 COPY polybot/requirements.txt .
 RUN pip install -r requirements.txt
 
-COPY .. .
+COPY . .
 COPY /polybot/YOURPUBLIC.pem .
 
 CMD ["python", "app.py"]

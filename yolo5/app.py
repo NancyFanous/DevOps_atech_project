@@ -97,7 +97,7 @@ def consume():
 
 
                 # TODO perform a GET request to Polybot to `/results` endpoint
-                url = f':80/results?chat_id={chat_id}&prediction_id={prediction_id}'
+                url = f'https://polybot-service:80/results?chat_id={chat_id}&prediction_id={prediction_id}'
                 requests.get(url)
 
             # Delete the message from the queue as the job is considered as DONE
