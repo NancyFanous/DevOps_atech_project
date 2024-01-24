@@ -50,12 +50,10 @@ def results():
         }
     )
     chat_id = request.args.get('chat_id')
-    text_results = response_item
     labels_string = response_item.get('Item', {}).get('labels', [])
     labels = json.loads(labels_string)
 
     class_counts = Counter(item['class'] for item in labels)
-    res = json.dumps(dict(class_counts))
     formatted_output = "\n".join([f"{key}: {value}" for key, value in class_counts.items()])
     translator = Translator() # google translate API (translate the result to arb and heb)
     translated_to_arabic = translator.translate(formatted_output, dest='ar').text
@@ -65,8 +63,6 @@ def results():
     bot.send_text(chat_id, translated_to_arabic)
     bot.send_text(chat_id, translated_to_hebrew)
 
-
-   # bot.send_text(chat_id, text_results)
     return 'Ok'
 
 
