@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: yolo5-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: yolo5
+  template:
+    metadata:
+      labels:
+        app: yolo5
+    spec:
+      containers:
+      - name: yolo5-container
+        image: 933060838752.dkr.ecr.us-east-1.amazonaws.com/yolo5_nancyf:1.0
+        env:
+        - name: BUCKET_NAME
+          value: nancy-bucket-1
+        - name: SQS_QUEUE_NAME
+          value: nancyf_queue
+        resources:
+          requests:
+            memory: "50Mi"
+            cpu: "50m"
+
+#apiVersion: v1
+#kind: Service
+#metadata:
+#  name: yolo5-service
+#spec:
+#  selector:
+#    app: yolo5
+#  ports:
+#    - protocol: TCP
+#      port: 80
+#      targetPort: 80
+#  type: ClusterIP
