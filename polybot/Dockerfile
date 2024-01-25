@@ -5,7 +5,7 @@ COPY polybot/requirements.txt .
 RUN pip install -r requirements.txt
 
 COPY polybot/app.py .
-COPY polybot/app.py .
+COPY polybot/bot.py .
 COPY /polybot/YOURPUBLIC.pem .
 
 CMD ["python", "app.py"]
