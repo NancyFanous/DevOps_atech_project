@@ -27,6 +27,8 @@ pipeline {
                     docker build -t $IMAGE_NAME:$BUILD_NUMBER -f $DOCKERFILE_PATH .
                     docker tag $IMAGE_NAME:$BUILD_NUMBER $ECR_URL/$IMAGE_NAME:$BUILD_NUMBER
                     docker push $ECR_URL/$IMAGE_NAME:$BUILD_NUMBER
+
+
                     """
                 }
             }
