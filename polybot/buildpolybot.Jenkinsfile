@@ -15,7 +15,7 @@ pipeline {
                 script {
                     //checkout scm
                     checkout([$class: 'GitSCM', branches: [[name: '*/main']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[url: 'https://github.com/NancyFanous/DevOps_atech_project.git']]])
-
+                    sh 'git branch'
                 }
             }
         }
