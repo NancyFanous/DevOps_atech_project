@@ -13,7 +13,7 @@ pipeline {
         stage('Checkout') {
             steps {
                 script {
-                    checkout scm
+                    checkout([$class: 'GitSCM', branches: [[name: '*/main']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[url: 'git@github.com:NancyFanous/DevOps_atech_project.git']]])
                 }
             }
         }
@@ -35,6 +35,7 @@ pipeline {
                         git add $POLYBOT_DEPLOYMENT_FILE
                         git commit -m "Update container image version in Kubernetes deployment"
                         git push origin main
+                        GIT_SSH_COMMAND="ssh -o StrictHostKeyChecking=no" git push origin main
                         """
                     }
                 }
