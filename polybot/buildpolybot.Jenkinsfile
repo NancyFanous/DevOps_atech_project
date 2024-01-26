@@ -7,7 +7,7 @@ pipeline {
         DOCKERFILE_PATH = 'polybot/Dockerfile'
         POLYBOT_DEPLOYMENT_FILE = 'k8s/polybot.yaml'
         GITHUB_REPO_URL = 'https://github.com/NancyFanous/DevOps_atech_project.git'
-        GITHUB_CREDENTIALS = credentials('github_jenkins')
+        GITHUB_CREDENTIALS = credentials('test_jenkins')
 
     }
 
