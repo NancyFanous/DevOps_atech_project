@@ -6,6 +6,8 @@ pipeline {
         IMAGE_NAME = 'polybot_nancyf'
         DOCKERFILE_PATH = 'polybot/Dockerfile'
         POLYBOT_DEPLOYMENT_FILE = 'k8s/polybot.yaml'
+        GITHUB_REPO_URL = 'https://github.com/NancyFanous/DevOps_atech_project.git'
+        GITHUB_CREDENTIALS = credentials('github_jenkins')
 
     }
 
@@ -13,7 +15,7 @@ pipeline {
         stage('Checkout') {
             steps {
                 script {
-                    checkout scm
+                    checkout([$class: 'GitSCM', branches: [[name: '*/main']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: "${GITHUB_CREDENTIALS}", url: "${GITHUB_REPO_URL}"]]])
                 }
             }
         }
@@ -34,7 +36,7 @@ pipeline {
 
                     git add $POLYBOT_DEPLOYMENT_FILE
                     git commit -m "Update container image version in Kubernetes deployment"
-                    git push -u origin HEAD:main
+                    git push -u origin main
                     """
                 }
             }
