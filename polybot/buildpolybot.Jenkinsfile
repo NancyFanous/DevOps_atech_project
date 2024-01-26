@@ -12,9 +12,7 @@ pipeline {
         stage('Checkout') {
             steps {
                 script {
-                    // Use git with SSH and disable StrictHostKeyChecking
-                    GIT_SSH_COMMAND = "ssh -o StrictHostKeyChecking=no"
-                    checkout([$class: 'GitSCM', branches: [[name: '*/main']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[url: 'git@github.com:NancyFanous/DevOps_atech_project.git']]])
+                    checkout scm
                 }
             }
         }
@@ -25,7 +23,6 @@ pipeline {
             }
             steps {
                 script {
-                    // Authenticate with AWS ECR
                     sh """
                     aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin $ECR_URL
                     docker build -t $IMAGE_NAME:$BUILD_NUMBER -f $DOCKERFILE_PATH .
@@ -36,8 +33,7 @@ pipeline {
 
                     git add $POLYBOT_DEPLOYMENT_FILE
                     git commit -m "Update container image version in Kubernetes deployment"
-                    git push origin main
-                    GIT_SSH_COMMAND="ssh -o StrictHostKeyChecking=no" git push origin main
+                    git push origin HEAD:main
                     """
                 }
             }
