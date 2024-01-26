@@ -8,15 +8,14 @@ pipeline {
         POLYBOT_DEPLOYMENT_FILE = 'k8s/polybot.yaml'
         GITHUB_REPO_URL = 'https://github.com/NancyFanous/DevOps_atech_project.git'
         GITHUB_CREDENTIALS = credentials('test_jenkins')
-
+        GIT_BRANCH = 'main'  // Update this if your default branch is different
     }
 
     stages {
         stage('Checkout') {
             steps {
                 script {
-
-                    checkout([$class: 'GitSCM', branches: [[name: '*/main']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: "${GITHUB_CREDENTIALS}", url: "${GITHUB_REPO_URL}"]]])
+                    checkout([$class: 'GitSCM', branches: [[name: "*/${GIT_BRANCH}"]], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: "${GITHUB_CREDENTIALS}", url: "${GITHUB_REPO_URL}"]]])
                 }
             }
         }
@@ -37,7 +36,7 @@ pipeline {
 
                     git add $POLYBOT_DEPLOYMENT_FILE
                     git commit -m "Update container image version in Kubernetes deployment"
-                    git push -u origin main
+                    git push -u origin ${GIT_BRANCH}
                     """
                 }
             }
