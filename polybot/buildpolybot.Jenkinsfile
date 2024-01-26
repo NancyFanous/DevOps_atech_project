@@ -33,25 +33,11 @@ pipeline {
 
                     git add $POLYBOT_DEPLOYMENT_FILE
                     git commit -m "Update container image version in Kubernetes deployment"
-                    git push origin main
+                    git push origin main:main
 
                     """
                 }
             }
         }
-
-//         stage('Trigger Deploy') {
-//             when {
-//                 changeset "polybot/**"
-//             }
-//             steps {
-//                 script {
-//                     def buildNumber = BUILD_NUMBER
-//                     build job: 'PolybotDeploy', wait: false, parameters: [
-//                         string(name: 'POLYBOT_IMAGE_BUILD_NUM', value: buildNumber)
-//                     ]
-//                 }
-//             }
-//         }
     }
 }
