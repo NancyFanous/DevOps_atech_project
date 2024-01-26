@@ -33,7 +33,7 @@ pipeline {
 
                     git add 'k8s/polybot.yaml'
                     git commit -m "Update container image version polybot.yaml"
-                    git push origin master
+                    git push origin main
                     """
                 }
             }
