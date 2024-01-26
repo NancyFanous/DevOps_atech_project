@@ -6,12 +6,14 @@ pipeline {
         IMAGE_NAME = 'polybot_nancyf'
         DOCKERFILE_PATH = 'polybot/Dockerfile'
         POLYBOT_DEPLOYMENT_FILE = 'k8s/polybot.yaml'
+        GITHUB_TOKEN = credentials('github_jenkins')
     }
 
     stages {
         stage('Checkout') {
             steps {
                 script {
+                    git config remote.origin.url "https://$GITHUB_TOKEN@github.com/NancyFanous/DevOps_atech_project.git"
                     checkout scm
                 }
             }
