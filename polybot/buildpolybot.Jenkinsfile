@@ -29,9 +29,9 @@ pipeline {
                     docker tag $IMAGE_NAME:$BUILD_NUMBER $ECR_URL/$IMAGE_NAME:$BUILD_NUMBER
                     docker push $ECR_URL/$IMAGE_NAME:$BUILD_NUMBER
 
-                    sed -i "s|image: .*|image: $ECR_URL/$IMAGE_NAME:$BUILD_NUMBER|" $POLYBOT_DEPLOYMENT_FILE
+                    sed -i "s|image: .*|image: $ECR_URL/$IMAGE_NAME:$BUILD_NUMBER|" 'k8s/polybot.yaml'
 
-                    git add $POLYBOT_DEPLOYMENT_FILE
+                    git add 'k8s/polybot.yaml'
                     git commit -m "Update container image version polybot.yaml"
                     git push origin main
                     """
