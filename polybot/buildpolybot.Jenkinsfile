@@ -41,7 +41,7 @@ pipeline {
                             userRemoteConfigs: [[credentialsId: GITHUB_CREDENTIALS, url: GITHUB_REPO_URL]]])
 
                         sh "git add $POLYBOT_DEPLOYMENT_FILE"
-                        sh 'git commit -m "Update container image version in Kubernetes deployment"'
+                        //sh 'git commit -m "Update container image version in Kubernetes deployment"'
                         sh "git push origin $GIT_BRANCH"
                     }
                 }
