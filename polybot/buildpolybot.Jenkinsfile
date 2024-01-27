@@ -6,9 +6,9 @@ pipeline {
         IMAGE_NAME = 'polybot_nancyf'
         DOCKERFILE_PATH = 'polybot/Dockerfile'
         POLYBOT_DEPLOYMENT_FILE = 'k8s/polybot.yaml'
-        GITHUB_REPO_URL = 'https://github.com/NancyFanous/DevOps_atech_project.git'
-        GITHUB_CREDENTIALS = credentials('jenkins_test_1')
-        GIT_BRANCH = 'main'
+        //GITHUB_REPO_URL = 'https://github.com/NancyFanous/DevOps_atech_project.git'
+        //GITHUB_CREDENTIALS = credentials('jenkins_test_1')
+        //GIT_BRANCH = 'main'
     }
 
     stages {
