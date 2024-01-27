@@ -65,8 +65,6 @@ def results():
     bot.send_text(chat_id, translated_to_arabic)
     bot.send_text(chat_id, translated_to_hebrew)
 
-
-   # bot.send_text(chat_id, text_results)
     return 'Ok'
 
 
