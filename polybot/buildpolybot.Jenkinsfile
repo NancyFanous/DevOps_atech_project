@@ -15,7 +15,7 @@ pipeline {
         stage('Checkout') {
             steps {
                 script {
-                    checkout([$class: 'GitSCM', branches: [[name: "*/${GIT_BRANCH}"]], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: "${GITHUB_CREDENTIALS}", url: "${GITHUB_REPO_URL}"]]])
+                    checkout(rations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: "${GITHUB_CREDENTIALS}", url: "${GITHUB_REPO_URL}"]]])
                 }
             }
         }
@@ -36,7 +36,7 @@ pipeline {
 
                     git add $POLYBOT_DEPLOYMENT_FILE
                     git commit -m "Update container image version in Kubernetes deployment"
-                    git push origin ${GIT_BRANCH}
+                    git push
                     """
                 }
             }
