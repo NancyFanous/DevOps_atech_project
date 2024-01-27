@@ -38,12 +38,12 @@ pipeline {
                     docker push $ECR_URL/$IMAGE_NAME:$BUILD_NUMBER
 
                     sed -i "s|image: .*|image: $ECR_URL/$IMAGE_NAME:$BUILD_NUMBER|" $POLYBOT_DEPLOYMENT_FILE
-
-                    withCredentials([usernamePassword(credentialsId: 'jenkins_test_1', passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) {
-                        git add $POLYBOT_DEPLOYMENT_FILE
-                        git commit -m "Update container image version in Kubernetes deployment"
-                        git push origin main
+                    withCredentials([usernamePassword(credentialsId: 'jenkins_test_1', passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]){
+                    git add $POLYBOT_DEPLOYMENT_FILE
+                    git commit -m "Update container image version in Kubernetes deployment"
+                    git push origin main
                     }
+
                     """
                 }
             }
