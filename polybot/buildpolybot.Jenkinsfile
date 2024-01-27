@@ -15,7 +15,7 @@ pipeline {
         stage('Checkout') {
             steps {
                 script {
-                    checkout(rations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: "${GITHUB_CREDENTIALS}", url: "${GITHUB_REPO_URL}"]]])
+                    checkout([$class: 'GitSCM', branches: [[name: "*/${GIT_BRANCH}"]], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: "${GITHUB_CREDENTIALS}", url: "${GITHUB_REPO_URL}"]]])
                 }
             }
         }
