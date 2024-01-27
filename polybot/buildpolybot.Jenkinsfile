@@ -32,17 +32,18 @@ pipeline {
                     sh "sed -i 's|image: .*|image: $ECR_URL/$IMAGE_NAME:$BUILD_NUMBER|' $POLYBOT_DEPLOYMENT_FILE"
 
                     // Git Operations
-                    checkout([$class: 'GitSCM',
-                        branches: [[name: "*/${GIT_BRANCH}"]],
-                        doGenerateSubmoduleConfigurations: false,
-                        extensions: [],
-                        submoduleCfg: [],
-                        userRemoteConfigs: [[credentialsId: GITHUB_CREDENTIALS, url: GITHUB_REPO_URL]]])
+                    withCredentials([usernamePassword(credentialsId: 'jenkins_test_1', usernameVariable: 'GIT_USERNAME', passwordVariable: 'GIT_PASSWORD')]) {
+                        checkout([$class: 'GitSCM',
+                            branches: [[name: "*/${GIT_BRANCH}"]],
+                            doGenerateSubmoduleConfigurations: false,
+                            extensions: [],
+                            submoduleCfg: [],
+                            userRemoteConfigs: [[credentialsId: GITHUB_CREDENTIALS, url: GITHUB_REPO_URL]]])
 
-                    sh "git add $POLYBOT_DEPLOYMENT_FILE"
-                    sh 'git commit -m "Update container image version in Kubernetes deployment"'
-                    sh "git push origin $GIT_BRANCH"
-
+                        sh "git add $POLYBOT_DEPLOYMENT_FILE"
+                        sh 'git commit -m "Update container image version in Kubernetes deployment"'
+                        sh "git push origin $GIT_BRANCH"
+                    }
                 }
             }
         }
