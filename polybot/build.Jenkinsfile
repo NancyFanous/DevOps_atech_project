@@ -19,17 +19,21 @@ pipeline {
 
                     dir(repoDirectory) {
                         checkout([$class: 'GitSCM',
-                                  branches: [[name: 'main']],
-                                  doGenerateSubmoduleConfigurations: false,
-                                  extensions: [[$class: 'CloneOption', noTags: false, shallow: true, depth: 1, reference: '', honorRefspec: false]],
-                                  submoduleCfg: [],
-                                  userRemoteConfigs: [[url: 'https://github.com/NancyFanous/DevOps_atech_project.git', credentialsId: 'github_jenkins']]])
+                            branches: [[name: 'main']],
+                            doGenerateSubmoduleConfigurations: false,
+                            extensions: [[$class: 'CloneOption', noTags: false, shallow: true, depth: 1, reference: '', honorRefspec: false]],
+                            submoduleCfg: [],
+                            userRemoteConfigs: [[url: 'https://github.com/NancyFanous/DevOps_atech_project.git', credentialsId: 'github_jenkins']]])
                     }
                 }
             }
         }
 
         stage('Build') {
+            when {
+                changeset "polybot/**"
+            }
+
             steps {
                 script {
                     def repoDirectory = "${workspace}/DevOps_atech_project"
@@ -49,7 +53,6 @@ pipeline {
                             git commit -m "Update container image version in Kubernetes deployment"
                             git pull origin releseas
                             git push origin releseas
-
                             """
                         }
                     }
