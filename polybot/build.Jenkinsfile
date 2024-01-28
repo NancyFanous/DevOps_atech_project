@@ -47,14 +47,9 @@ pipeline {
                             docker push $ECR_URL/$IMAGE_NAME:$BUILD_NUMBER
 
                             sed -i "s|image: .*|image: $ECR_URL/$IMAGE_NAME:$BUILD_NUMBER|" $POLYBOT_DEPLOYMENT_FILE
-                            git remote set-url origin $GITHUB_REPO_URL
+                            git remote set-url origin https://${GITHUB_USERNAME}:${GITHUB_PASSWORD}@github.com/NancyFanous/DevOps_atech_project.git
                             git add $POLYBOT_DEPLOYMENT_FILE
                             git commit -m "Update container image version in Kubernetes deployment"
-
-                            # Pull changes and rebase local changes on top
-                            git pull origin $GIT_BRANCH
-
-                            # Push changes with force, providing GitHub username and password
                             git push origin $GIT_BRANCH
                             """
                         }
