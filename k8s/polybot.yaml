@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: polybot-container
-        image: 933060838752.dkr.ecr.us-east-1.amazonaws.com/polybot_nancyf:163
+        image: 933060838752.dkr.ecr.us-east-1.amazonaws.com/polybot_nancyf:165
         env:
         - name: TELEGRAM_APP_URL
           value: "https://nancyf.atech-bot.click:443"
