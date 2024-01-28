@@ -45,6 +45,11 @@ pipeline {
                         docker tag $IMAGE_NAME:$BUILD_NUMBER $ECR_URL/$IMAGE_NAME:$BUILD_NUMBER
                         docker push $ECR_URL/$IMAGE_NAME:$BUILD_NUMBER
 
+                        git branch main origin/main || true
+                        git checkout main
+
+
+
                         sed -i "s|image: .*|image: $ECR_URL/$IMAGE_NAME:$BUILD_NUMBER|" $POLYBOT_DEPLOYMENT_FILE
                         echo "Current directory: ${pwd()}"
                         git remote set-url origin https://github.com/NancyFanous/DevOps_atech_project.git
