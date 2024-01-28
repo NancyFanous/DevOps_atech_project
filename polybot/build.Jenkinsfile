@@ -39,20 +39,18 @@ pipeline {
 
                     // Change to the repository directory
                     dir(repoDirectory) {
-                        withCredentials([usernamePassword(credentialsId: 'github_jenkins', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
-                            sh """
-                            aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin $ECR_URL
-                            docker build -t $IMAGE_NAME:$BUILD_NUMBER -f $DOCKERFILE_PATH .
-                            docker tag $IMAGE_NAME:$BUILD_NUMBER $ECR_URL/$IMAGE_NAME:$BUILD_NUMBER
-                            docker push $ECR_URL/$IMAGE_NAME:$BUILD_NUMBER
+                        sh """
+                        aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin $ECR_URL
+                        docker build -t $IMAGE_NAME:$BUILD_NUMBER -f $DOCKERFILE_PATH .
+                        docker tag $IMAGE_NAME:$BUILD_NUMBER $ECR_URL/$IMAGE_NAME:$BUILD_NUMBER
+                        docker push $ECR_URL/$IMAGE_NAME:$BUILD_NUMBER
 
-                            sed -i "s|image: .*|image: $ECR_URL/$IMAGE_NAME:$BUILD_NUMBER|" $POLYBOT_DEPLOYMENT_FILE
-                            git remote set-url origin $GITHUB_REPO_URL
-                            git add $POLYBOT_DEPLOYMENT_FILE
-                            git commit -m "Update container image version in Kubernetes deployment"
-                            git push origin $GIT_BRANCH
-                            """
-                        }
+                        sed -i "s|image: .*|image: $ECR_URL/$IMAGE_NAME:$BUILD_NUMBER|" $POLYBOT_DEPLOYMENT_FILE
+                        git remote set-url origin $GITHUB_REPO_URL
+                        git add $POLYBOT_DEPLOYMENT_FILE
+                        git commit -m "Update container image version in Kubernetes deployment"
+                        GIT_ASKPASS=echo git push origin $GIT_BRANCH
+                        """
                     }
                 }
             }
