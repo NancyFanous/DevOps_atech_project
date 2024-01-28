@@ -41,6 +41,7 @@ pipeline {
                             docker build -t $IMAGE_NAME:$BUILD_NUMBER -f $DOCKERFILE_PATH .
                             docker tag $IMAGE_NAME:$BUILD_NUMBER $ECR_URL/$IMAGE_NAME:$BUILD_NUMBER
                             docker push $ECR_URL/$IMAGE_NAME:$BUILD_NUMBER
+
                             sed -i "s%image: .*%image: $ECR_URL/$IMAGE_NAME:$BUILD_NUMBER%g" $POLYBOT_DEPLOYMENT_FILE
 
                             git remote set-url origin https://${GITHUB_USERNAME}:${GITHUB_PASSWORD}@github.com/NancyFanous/DevOps_atech_project.git
