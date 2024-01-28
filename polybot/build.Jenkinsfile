@@ -39,27 +39,20 @@ pipeline {
 
                     // Change to the repository directory
                     dir(repoDirectory) {
-                        sh """
-                        aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin $ECR_URL
-                        docker build -t $IMAGE_NAME:$BUILD_NUMBER -f $DOCKERFILE_PATH .
-                        docker tag $IMAGE_NAME:$BUILD_NUMBER $ECR_URL/$IMAGE_NAME:$BUILD_NUMBER
-                        docker push $ECR_URL/$IMAGE_NAME:$BUILD_NUMBER
+                        withCredentials([usernamePassword(credentialsId: 'github_jenkins', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+                            sh """
+                            aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin $ECR_URL
+                            docker build -t $IMAGE_NAME:$BUILD_NUMBER -f $DOCKERFILE_PATH .
+                            docker tag $IMAGE_NAME:$BUILD_NUMBER $ECR_URL/$IMAGE_NAME:$BUILD_NUMBER
+                            docker push $ECR_URL/$IMAGE_NAME:$BUILD_NUMBER
 
-                        git branch main origin/main || true
-                        git checkout main
-
-
-
-                        sed -i "s|image: .*|image: $ECR_URL/$IMAGE_NAME:$BUILD_NUMBER|" $POLYBOT_DEPLOYMENT_FILE
-                        echo "Current directory: ${pwd()}"
-                        git remote set-url origin https://github.com/NancyFanous/DevOps_atech_project.git
-                        git remote -v
-
-                        git add $POLYBOT_DEPLOYMENT_FILE
-                        git commit -m "Update container image version in Kubernetes deployment"
-                        git fetch origin main
-                        git push origin main
-                        """
+                            sed -i "s|image: .*|image: $ECR_URL/$IMAGE_NAME:$BUILD_NUMBER|" $POLYBOT_DEPLOYMENT_FILE
+                            git remote set-url origin $GITHUB_REPO_URL
+                            git add $POLYBOT_DEPLOYMENT_FILE
+                            git commit -m "Update container image version in Kubernetes deployment"
+                            git push origin $GIT_BRANCH
+                            """
+                        }
                     }
                 }
             }
