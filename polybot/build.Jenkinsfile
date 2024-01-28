@@ -45,11 +45,11 @@ pipeline {
                             sed -i "s|image: .*|image: $ECR_URL/$IMAGE_NAME:$BUILD_NUMBER|" $POLYBOT_DEPLOYMENT_FILE
 
                             git remote set-url origin https://${GITHUB_USERNAME}:${GITHUB_PASSWORD}@github.com/NancyFanous/DevOps_atech_project.git
+                            git checkout main
                             git add $POLYBOT_DEPLOYMENT_FILE
                             git commit -m "Update container image version in Kubernetes deployment"
-                            git checkout main
-                            git pull origin main --rebase
-                            git push --force-with-lease origin main
+                            git pull origin $GIT_BRANCH
+                            git push origin main
 
                             """
                         }
