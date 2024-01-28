@@ -15,10 +15,8 @@ pipeline {
         stage('Checkout') {
             steps {
                 script {
-                    // Construct the repository directory path using the workspace variable
                     def repoDirectory = "${workspace}/DevOps_atech_project"
 
-                    // Change to the repository directory
                     dir(repoDirectory) {
                         checkout([$class: 'GitSCM',
                                   branches: [[name: 'main']],
@@ -34,10 +32,8 @@ pipeline {
         stage('Build') {
             steps {
                 script {
-                    // Construct the repository directory path using the workspace variable
                     def repoDirectory = "${workspace}/DevOps_atech_project"
 
-                    // Change to the repository directory
                     dir(repoDirectory) {
                         withCredentials([usernamePassword(credentialsId: 'github_jenkins', passwordVariable: 'GITHUB_PASSWORD', usernameVariable: 'GITHUB_USERNAME')]) {
                             sh """
@@ -47,12 +43,11 @@ pipeline {
                             docker push $ECR_URL/$IMAGE_NAME:$BUILD_NUMBER
 
                             sed -i "s|image: .*|image: $ECR_URL/$IMAGE_NAME:$BUILD_NUMBER|" $POLYBOT_DEPLOYMENT_FILE
+
                             git remote set-url origin https://${GITHUB_USERNAME}:${GITHUB_PASSWORD}@github.com/NancyFanous/DevOps_atech_project.git
                             git pull origin $GIT_BRANCH
                             git add $POLYBOT_DEPLOYMENT_FILE
                             git commit -m "Update container image version in Kubernetes deployment"
-
-                            # Pull changes before pushing
 
                             git push origin $GIT_BRANCH
                             """
