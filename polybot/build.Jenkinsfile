@@ -48,7 +48,6 @@ pipeline {
                             git checkout releseas
                             git add $POLYBOT_DEPLOYMENT_FILE
                             git commit -m "Update container image version in Kubernetes deployment"
-                            git checkout releseas
                             git pull origin releseas
                             git push origin releseas
                             """
