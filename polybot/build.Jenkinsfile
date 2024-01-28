@@ -49,7 +49,6 @@ pipeline {
                             git commit -m "Update container image version in Kubernetes deployment"
                             git pull origin main
                             git push origin main
-
                             """
                         }
                     }
