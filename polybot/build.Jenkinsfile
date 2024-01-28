@@ -7,7 +7,7 @@ pipeline {
         DOCKERFILE_PATH = 'polybot/Dockerfile'
         POLYBOT_DEPLOYMENT_FILE = 'k8s/polybot.yaml'
         GITHUB_REPO_URL = 'https://github.com/NancyFanous/DevOps_atech_project.git'
-        GITHUB_CREDENTIALS = 'githubcredentials'
+        GITHUB_CREDENTIALS = 'github_jenkins'
         GIT_BRANCH = 'main'
     }
 
@@ -20,7 +20,7 @@ pipeline {
                               doGenerateSubmoduleConfigurations: false,
                               extensions: [[$class: 'CloneOption', noTags: false, shallow: true, depth: 1, reference: '', honorRefspec: false]],
                               submoduleCfg: [],
-                              userRemoteConfigs: [[url: 'https://github.com/NancyFanous/DevOps_atech_project.git', credentialsId: 'githubcredentials']]])
+                              userRemoteConfigs: [[url: 'https://github.com/NancyFanous/DevOps_atech_project.git', credentialsId: 'github_jenkins']]])
                 }
             }
         }
