@@ -30,6 +30,7 @@ pipeline {
 
         stage('Build') {
             when {
+
                 changeset "yolo5/**"
             }
 
