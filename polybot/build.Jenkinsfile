@@ -38,7 +38,7 @@ pipeline {
                     git remote set-url origin $GITHUB_REPO_URL
                     git add $POLYBOT_DEPLOYMENT_FILE
                     git commit -m "Update container image version in Kubernetes deployment"
-                    git push origin $GIT_BRANCH
+                    GIT_TRACE=1 git push origin $GIT_BRANCH
                     """
                 }
             }
