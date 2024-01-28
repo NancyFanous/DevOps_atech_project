@@ -63,7 +63,7 @@ def consume():
 
             # TODO Uploads the predicted image (predicted_img_path) to S3 (be careful not to override the original image).
 
-            the_image = original_img_path[:-4] + "_predicted22.jpg"
+            the_image = original_img_path[:-4] + "_predicted.jpg"
             s3.upload_file(str(predicted_img_path), images_bucket, the_image)
 
             # Parse prediction labels and create a summary
@@ -97,7 +97,7 @@ def consume():
 
 
                 # TODO perform a GET request to Polybot to `/results` endpoint
-                url = f'https://polybot-service:80/results?chat_id={chat_id}&prediction_id={prediction_id}'
+                url = f'http://polybot-service:80/results?chat_id={chat_id}&prediction_id={prediction_id}'
                 requests.get(url)
 
             # Delete the message from the queue as the job is considered as DONE
