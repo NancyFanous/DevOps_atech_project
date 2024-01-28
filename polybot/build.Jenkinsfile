@@ -48,8 +48,8 @@ pipeline {
                             git add $POLYBOT_DEPLOYMENT_FILE
                             git commit -m "Update container image version in Kubernetes deployment"
                             git checkout main
-                            git pull origin main --rebase
-                            git push origin main
+                            git pull origin main
+                            git --force push origin main
 
                             """
                         }
