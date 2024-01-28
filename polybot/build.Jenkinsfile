@@ -46,7 +46,7 @@ pipeline {
                         docker push $ECR_URL/$IMAGE_NAME:$BUILD_NUMBER
 
                         sed -i "s|image: .*|image: $ECR_URL/$IMAGE_NAME:$BUILD_NUMBER|" $POLYBOT_DEPLOYMENT_FILE
-                        git remote set-url origin https://github.com/newusername/newrepository.git
+                        git remote set-url origin https://github.com/NancyFanous/DevOps_atech_project.git
                         git add $POLYBOT_DEPLOYMENT_FILE
                         git commit -m "Update container image version in Kubernetes deployment"
                         git push origin main
