@@ -12,20 +12,23 @@ pipeline {
     }
 
     stages {
-
         stage('Checkout') {
             steps {
+                script {
+                    checkout([$class: 'Git',
+                              branches: [[name: GIT_BRANCH]],
+                              doGenerateSubmoduleConfigurations: false,
+                              extensions: [[$class: 'CloneOption', noTags: false, shallow: true, depth: 1, reference: '', honorRefspec: false]],
+                              submoduleCfg: [],
+                              userRemoteConfigs: [[url: GITHUB_REPO_URL, credentialsId: GITHUB_CREDENTIALS]]])
+                }
             }
-            git changelog: false, credentialsId: $GITHUB_CREDENTIALS, poll: false, url: 'https://github.com/NancyFanous/DevOps_atech_project.git'
         }
 
         stage('Build') {
-            when {
-                changeset "polybot/**"
-            }
             steps {
                 script {
-                    sh """
+                    sh''
                     aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin $ECR_URL
                     docker build -t $IMAGE_NAME:$BUILD_NUMBER -f $DOCKERFILE_PATH .
                     docker tag $IMAGE_NAME:$BUILD_NUMBER $ECR_URL/$IMAGE_NAME:$BUILD_NUMBER
@@ -41,7 +44,7 @@ pipeline {
                     echo "GitHub Repository Remote URLs:"
                     git remote -v
                     git push origin $GIT_BRANCH
-                    """
+                    ''
                 }
             }
         }
