@@ -15,12 +15,18 @@ pipeline {
         stage('Checkout') {
             steps {
                 script {
-                    checkout([$class: 'GitSCM',
-                              branches: [[name: 'main']],
-                              doGenerateSubmoduleConfigurations: false,
-                              extensions: [[$class: 'CloneOption', noTags: false, shallow: true, depth: 1, reference: '', honorRefspec: false]],
-                              submoduleCfg: [],
-                              userRemoteConfigs: [[url: 'https://github.com/NancyFanous/DevOps_atech_project.git', credentialsId: 'github_jenkins']]])
+                    // Construct the repository directory path using the workspace variable
+                    def repoDirectory = "${workspace}/DevOps_atech_project"
+
+                    // Change to the repository directory
+                    dir(repoDirectory) {
+                        checkout([$class: 'GitSCM',
+                                  branches: [[name: 'main']],
+                                  doGenerateSubmoduleConfigurations: false,
+                                  extensions: [[$class: 'CloneOption', noTags: false, shallow: true, depth: 1, reference: '', honorRefspec: false]],
+                                  submoduleCfg: [],
+                                  userRemoteConfigs: [[url: 'https://github.com/NancyFanous/DevOps_atech_project.git', credentialsId: 'github_jenkins']]])
+                    }
                 }
             }
         }
@@ -28,18 +34,24 @@ pipeline {
         stage('Build') {
             steps {
                 script {
-                    sh """
-                    aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin $ECR_URL
-                    docker build -t $IMAGE_NAME:$BUILD_NUMBER -f $DOCKERFILE_PATH .
-                    docker tag $IMAGE_NAME:$BUILD_NUMBER $ECR_URL/$IMAGE_NAME:$BUILD_NUMBER
-                    docker push $ECR_URL/$IMAGE_NAME:$BUILD_NUMBER
+                    // Construct the repository directory path using the workspace variable
+                    def repoDirectory = "${workspace}/DevOps_atech_project"
 
-                    sed -i "s|image: .*|image: $ECR_URL/$IMAGE_NAME:$BUILD_NUMBER|" $POLYBOT_DEPLOYMENT_FILE
-                    git remote set-url origin https://github.com/newusername/newrepository.git
-                    git add $POLYBOT_DEPLOYMENT_FILE
-                    git commit -m "Update container image version in Kubernetes deployment"
-                    git push origin main
-                    """
+                    // Change to the repository directory
+                    dir(repoDirectory) {
+                        sh """
+                        aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin $ECR_URL
+                        docker build -t $IMAGE_NAME:$BUILD_NUMBER -f $DOCKERFILE_PATH .
+                        docker tag $IMAGE_NAME:$BUILD_NUMBER $ECR_URL/$IMAGE_NAME:$BUILD_NUMBER
+                        docker push $ECR_URL/$IMAGE_NAME:$BUILD_NUMBER
+
+                        sed -i "s|image: .*|image: $ECR_URL/$IMAGE_NAME:$BUILD_NUMBER|" $POLYBOT_DEPLOYMENT_FILE
+                        git remote set-url origin https://github.com/newusername/newrepository.git
+                        git add $POLYBOT_DEPLOYMENT_FILE
+                        git commit -m "Update container image version in Kubernetes deployment"
+                        git push origin main
+                        """
+                    }
                 }
             }
         }
