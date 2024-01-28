@@ -29,21 +29,19 @@ pipeline {
             steps {
                 script {
 
+                    sh """
                     aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin $ECR_URL
-                    docker build -t "$IMAGE_NAME:$BUILD_NUMBER" -f $DOCKERFILE_PATH .
+                    docker build -t $IMAGE_NAME:$BUILD_NUMBER -f $DOCKERFILE_PATH .
                     docker tag $IMAGE_NAME:$BUILD_NUMBER $ECR_URL/$IMAGE_NAME:$BUILD_NUMBER
                     docker push $ECR_URL/$IMAGE_NAME:$BUILD_NUMBER
 
                     sed -i "s|image: .*|image: $ECR_URL/$IMAGE_NAME:$BUILD_NUMBER|" $POLYBOT_DEPLOYMENT_FILE
-                    git remote set-url origin $GITHUB_REPO_URL
+                    git remote set-url origin https://github.com/newusername/newrepository.git
                     git add $POLYBOT_DEPLOYMENT_FILE
-                    echo "Git Configuration:"
-                    git config --list
                     git commit -m "Update container image version in Kubernetes deployment"
+                    git push origin main
+                    """
 
-                    echo "GitHub Repository Remote URLs:"
-                    git remote -v
-                    git push origin $GIT_BRANCH
                 }
             }
         }
