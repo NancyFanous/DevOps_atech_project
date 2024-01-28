@@ -15,15 +15,8 @@ pipeline {
 
         stage('Checkout') {
             steps {
-                script {
-                    checkout([$class: 'Git',
-                              branches: [[name: GIT_BRANCH]],
-                              doGenerateSubmoduleConfigurations: false,
-                              extensions: [[$class: 'CloneOption', noTags: false, shallow: true, depth: 1, reference: '', honorRefspec: false]],
-                              submoduleCfg: [],
-                              userRemoteConfigs: [[url: GITHUB_REPO_URL, credentialsId: GITHUB_CREDENTIALS]]])
-                }
             }
+            git changelog: false, credentialsId: $GITHUB_CREDENTIALS, poll: false, url: 'https://github.com/NancyFanous/DevOps_atech_project.git'
         }
 
         stage('Build') {
