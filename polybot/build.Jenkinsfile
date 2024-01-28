@@ -20,7 +20,7 @@ pipeline {
                               doGenerateSubmoduleConfigurations: false,
                               extensions: [[$class: 'CloneOption', noTags: false, shallow: true, depth: 1, reference: '', honorRefspec: false]],
                               submoduleCfg: [],
-                              userRemoteConfigs: [[url: GITHUB_REPO_URL, credentialsId: GITHUB_CREDENTIALS]])
+                              userRemoteConfigs: [[url: GITHUB_REPO_URL, credentialsId: GITHUB_CREDENTIALS]]])
                 }
             }
         }
