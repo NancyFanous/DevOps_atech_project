@@ -49,7 +49,7 @@ pipeline {
                             git commit -m "Update container image version in Kubernetes deployment"
                             git checkout main
                             git pull origin main --rebase
-                            git --force push origin main
+                            git push --force-with-lease origin main
 
                             """
                         }
