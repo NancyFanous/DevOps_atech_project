@@ -28,6 +28,13 @@ TELEGRAM_APP_URL = os.environ['TELEGRAM_APP_URL']
 def index():
     return 'Ok'
 
+@app.route('/healthz', methods=['GET'])
+def healthz():
+    return 'Ok'
+
+@app.route('/ready', methods=['GET'])
+def ready():
+    return 'Ok'
 
 @app.route(f'/{TELEGRAM_TOKEN}/', methods=['POST'])
 def webhook():
