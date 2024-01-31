@@ -50,6 +50,7 @@ pipeline {
                             git pull origin releseas
 
                             git checkout releseas
+                            git pull origin releseas
 
                             sed -i "s%image: .*%image: $ECR_URL/$IMAGE_NAME:$BUILD_NUMBER%g" $POLYBOT_DEPLOYMENT_FILE
 
