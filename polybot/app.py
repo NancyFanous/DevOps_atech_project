@@ -23,7 +23,6 @@ print(TELEGRAM_TOKEN)
 
 TELEGRAM_APP_URL = os.environ['TELEGRAM_APP_URL']
 
-
 @app.route('/', methods=['GET'])
 def index():
     return 'Ok'
