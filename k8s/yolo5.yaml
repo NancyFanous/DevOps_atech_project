@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: yolo5-container
-        image: 933060838752.dkr.ecr.us-east-1.amazonaws.com/yolo5_nancyf:6
+        image: 933060838752.dkr.ecr.us-east-1.amazonaws.com/yolo5_nancyf:7
         env:
         - name: BUCKET_NAME
           value: nancy-bucket-1
