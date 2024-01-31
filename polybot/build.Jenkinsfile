@@ -47,7 +47,7 @@ pipeline {
                             docker push $ECR_URL/$IMAGE_NAME:$BUILD_NUMBER
 
                             git checkout releseas
-                            git pull origin releseas
+                            git merge origin/releseas
                             sed -i "s%image: .*%image: $ECR_URL/$IMAGE_NAME:$BUILD_NUMBER%g" $POLYBOT_DEPLOYMENT_FILE
                             git remote set-url origin https://${GITHUB_USERNAME}:${GITHUB_PASSWORD}@github.com/NancyFanous/DevOps_atech_project.git
                             git add $POLYBOT_DEPLOYMENT_FILE
