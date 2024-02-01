@@ -47,6 +47,8 @@ pipeline {
                             docker push $ECR_URL/$IMAGE_NAME:$BUILD_NUMBER
 
                             git checkout releseas
+                            git fetch origin releseas
+                            git reset --hard origin/releseas
 
                             sed -i "s%image: .*%image: $ECR_URL/$IMAGE_NAME:$BUILD_NUMBER%g" $YOLO5_DEPLOYMENT_FILE
                             git remote set-url origin https://${GITHUB_USERNAME}:${GITHUB_PASSWORD}@github.com/NancyFanous/DevOps_atech_project.git
