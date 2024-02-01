@@ -100,6 +100,7 @@ def consume():
                 url = f'http://polybot-service:80/results?chat_id={chat_id}&prediction_id={prediction_id}'
                 requests.get(url)
 
+
             # Delete the message from the queue as the job is considered as DONE
             sqs_client.delete_message(QueueUrl=queue_name, ReceiptHandle=receipt_handle)
 
