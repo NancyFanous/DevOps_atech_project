@@ -52,6 +52,7 @@ pipeline {
                             sed -i "s%image: .*%image: $ECR_URL/$IMAGE_NAME:$BUILD_NUMBER%g" $POLYBOT_DEPLOYMENT_FILE
                             git add $POLYBOT_DEPLOYMENT_FILE
                             git commit -m "Update container image version in Kubernetes deployment"
+
                             git pull origin releseas
                             git push origin releseas
                             """
