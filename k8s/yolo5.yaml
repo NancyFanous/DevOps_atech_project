@@ -17,9 +17,9 @@ spec:
         image: 933060838752.dkr.ecr.us-east-1.amazonaws.com/yolo5_nancyf:1.0
         env:
         - name: BUCKET_NAME
-          value: nancy-bucket-1
+          value: nancyf-tf
         - name: SQS_QUEUE_NAME
-          value: nancyf_queue
+          value: nancyf-tf
         resources:
           requests:
             memory: "50Mi"

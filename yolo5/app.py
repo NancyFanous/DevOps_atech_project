@@ -92,7 +92,7 @@ def consume():
 
                 # TODO store the prediction_summary in a DynamoDB table
                 dynamodb_client = boto3.client('dynamodb', region_name='eu-north-1')
-                dynamodb_table_name = 'nancyf_tb'
+                dynamodb_table_name = 'nancyf-tf'
                 dynamodb_client.put_item(TableName=dynamodb_table_name, Item=prediction_summary)
 
 

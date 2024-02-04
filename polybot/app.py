@@ -11,7 +11,7 @@ app = flask.Flask(__name__)
 
 
 # TODO load TELEGRAM_TOKEN value from Secret Manager
-secret_name = "nancyf_telegram_token"
+secret_name = "nancyf_telegram_token_tf"
 client = boto3.client('secretsmanager', region_name='eu-north-1')
 response = client.get_secret_value(SecretId=secret_name)
 response_json = json.loads(response['SecretString'])
@@ -40,7 +40,7 @@ def results():
 
     # TODO use the prediction_id to retrieve results from DynamoDB and send to the end-user
     dynamodb = boto3.resource('dynamodb', region_name='eu-north-1')
-    table = dynamodb.Table('nancyf_tb')
+    table = dynamodb.Table('nancyf-tf')
 
     response_item = table.get_item(
         Key={

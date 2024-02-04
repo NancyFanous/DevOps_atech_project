@@ -37,9 +37,14 @@ resource "aws_secretsmanager_secret" "telegram_token_secret" {
   name = "nancyf_telegram_token_tf"
 }
 
+
 resource "aws_secretsmanager_secret_version" "telegram_token_version" {
   secret_id     = aws_secretsmanager_secret.telegram_token_secret.id
-  secret_string = var.telegram_token
+  secret_string = <<EOT
+{
+  "TELEGRAM_TOKEN": "${var.telegram_token}"
+}
+EOT
 }
 
 

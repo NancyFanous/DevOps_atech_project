@@ -75,10 +75,10 @@ class ObjectDetectionBot(Bot):
 
             # TODO upload the photo to S3
             s3_client = boto3.client('s3')
-            s3_client.upload_file(photo_path, 'nancy-bucket-1', 'picture_from_bot.jpg')
+            s3_client.upload_file(photo_path, 'nancyf-tf', 'picture_from_bot.jpg')
 
             # TODO send a job to the SQS queue
-            queue_url = 'https://sqs.eu-north-1.amazonaws.com/933060838752/nancyf_queue'
+            queue_url = 'https://sqs.eu-north-1.amazonaws.com/933060838752/nancyf-tf'
             message_body = {'image_name': 'picture_from_bot.jpg', 'chat_id': msg['chat']['id']}
             sqs = boto3.client('sqs', region_name='eu-north-1')
             json_message_body = json.dumps(message_body)
