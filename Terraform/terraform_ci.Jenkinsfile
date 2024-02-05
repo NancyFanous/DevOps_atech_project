@@ -25,12 +25,12 @@ pipeline {
                     // Run Terraform init and apply using the Terraform plugin
                     terraformCLI(
                         commands: "init",
-                        workingDirectory: "/Terraform"
+                        workingDirectory: "/"
                     )
 
                     terraformCLI(
                         commands: "apply -auto-approve -var 'telegram_token=${telegramToken}'",
-                        workingDirectory: "/Terraform"
+                        workingDirectory: "/"
                     )
                 }
             }
