@@ -23,17 +23,11 @@ pipeline {
                             TELEGRAM_TOKEN_CREDENTIALS_ID
                         )
 
-                        // Run Terraform init and apply using the Terraform plugin
-                        terraformCLI(
-                            commands: "init",
-                            workingDirectory: "."
+                        // Run Terraform init
+                        sh "terraform init"
 
-                        )
-
-                        terraformCLI(
-                            commands: "apply -auto-approve -var 'telegram_token=${telegramToken}'",
-                            workingDirectory: "."
-                        )
+                        // Run Terraform apply with auto-approve and variable
+                        sh "terraform apply -auto-approve -var 'telegram_token=${telegramToken}'"
                     }
                 }
             }
