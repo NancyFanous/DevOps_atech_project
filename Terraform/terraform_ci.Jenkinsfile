@@ -22,9 +22,8 @@ pipeline {
                 script {
 
                     dir('Terraform') {
-                       def telegramToken = credentials(
-                            TELEGRAM_TOKEN_CREDENTIALS_ID
-                        )
+                       def telegramToken = TELEGRAM_TOKEN_CREDENTIALS_ID
+
                         sh "terraform apply -auto-approve -var 'telegram_token=${telegramToken}'"
                     }
                 }
