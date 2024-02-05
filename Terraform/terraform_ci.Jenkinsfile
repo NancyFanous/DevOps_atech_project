@@ -4,7 +4,6 @@ pipeline {
     environment {
         TF_HOME = tool 'Terraform'
         AWS_DEFAULT_REGION = 'eu-north-1'
-        TERRAFORM_DIR = '/terraform'
         TELEGRAM_TOKEN_CREDENTIALS_ID = 'telegram_token'
     }
 
@@ -15,28 +14,24 @@ pipeline {
             }
         }
 
-        stage('Terraform Init') {
+        stage('Terraform Init & Apply') {
             steps {
                 script {
-                    dir(TERRAFORM_DIR) {
-                        sh "${TF_HOME}/terraform init"
-                    }
-                }
-            }
-        }
-
-        stage('Terraform Apply') {
-            steps {
-                script {
-
+                    // Retrieve Telegram token from Jenkins secret text credentials
                     def telegramToken = credentials(
                         TELEGRAM_TOKEN_CREDENTIALS_ID
                     )
 
-                    dir(TERRAFORM_DIR) {
-                        sh "${TF_HOME}/terraform apply -auto-approve \
-                            -var 'telegram_token=${telegramToken}'"
-                    }
+                    // Run Terraform init and apply using the Terraform plugin
+                    terraformCLI(
+                        commands: "init",
+                        workingDirectory: "/Terraform"
+                    )
+
+                    terraformCLI(
+                        commands: "apply -auto-approve -var 'telegram_token=${telegramToken}'",
+                        workingDirectory: "/Terraform"
+                    )
                 }
             }
         }
