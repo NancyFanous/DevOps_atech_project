@@ -2,28 +2,29 @@ pipeline {
     agent any
 
     environment {
-        TF_HOME = tool 'Terraform'
-        AWS_DEFAULT_REGION = 'eu-north-1'
+        TF_CLI_ARGS = "-input=false"
+        TF_IN_AUTOMATION = "true"
         TELEGRAM_TOKEN_CREDENTIALS_ID = 'telegram_token'
+
     }
 
     stages {
         stage('Checkout') {
             steps {
-                checkout scm
+                script {
+                    checkout scm
+                }
             }
         }
 
-        stage('Terraform Init & Apply') {
+        stage('Terraform Apply') {
             steps {
-                dir('Terraform') {
-                    script {
-                        // Retrieve Telegram token from Jenkins secret text credentials
-                        def telegramToken = credentials(
+                script {
+
+                    dir('Terraform') {
+                       def telegramToken = credentials(
                             TELEGRAM_TOKEN_CREDENTIALS_ID
                         )
-
-                        // Run Terraform apply with auto-approve and variable
                         sh "terraform apply -auto-approve -var 'telegram_token=${telegramToken}'"
                     }
                 }
