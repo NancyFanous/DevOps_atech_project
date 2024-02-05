@@ -22,11 +22,14 @@ pipeline {
                         TELEGRAM_TOKEN_CREDENTIALS_ID
                     )
 
-                    // Run Terraform init
-                    sh "terraform init"
+                    // Change the working directory to the Terraform directory
+                    dir('/Terraform') {
+                        // Run Terraform init
+                        sh "terraform init"
 
-                    // Run Terraform apply with required variables
-                    sh "terraform apply -auto-approve -var 'telegram_token=${telegramToken}'"
+                        // Run Terraform apply with required variables
+                        sh "terraform apply -auto-approve -var 'telegram_token=${telegramToken}'"
+                    }
                 }
             }
         }
