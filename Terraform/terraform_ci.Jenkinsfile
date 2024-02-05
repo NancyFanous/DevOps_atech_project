@@ -27,6 +27,7 @@ pipeline {
                         terraformCLI(
                             commands: "init",
                             workingDirectory: "."
+
                         )
 
                         terraformCLI(
