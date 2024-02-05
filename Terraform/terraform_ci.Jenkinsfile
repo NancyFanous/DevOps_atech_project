@@ -6,6 +6,7 @@ pipeline {
         TF_HOME = tool 'Terraform'
         AWS_DEFAULT_REGION = 'eu-north-1'
         TELEGRAM_TOKEN_CREDENTIALS_ID = 'telegram_token'
+
     }
 
     stages {
