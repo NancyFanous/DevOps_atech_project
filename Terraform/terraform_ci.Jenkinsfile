@@ -4,6 +4,7 @@ pipeline {
     environment {
         TF_HOME = tool 'Terraform'
         AWS_DEFAULT_REGION = 'eu-north-1'
+        TELEGRAM_TOKEN_CREDENTIALS_ID = 'telegram_token'
     }
 
     stages {
@@ -13,12 +14,17 @@ pipeline {
             }
         }
 
-        stage('Terraform Apply') {
+        stage('Terraform Init & Apply') {
             steps {
                 dir('Terraform') {
                     script {
-                        // Run Terraform apply
-                        sh "terraform apply -auto-approve"
+                        // Retrieve Telegram token from Jenkins secret text credentials
+                        def telegramToken = credentials(
+                            TELEGRAM_TOKEN_CREDENTIALS_ID
+                        )
+
+                        // Run Terraform apply with auto-approve and variable
+                        sh "terraform apply -auto-approve -var 'telegram_token=${telegramToken}'"
                     }
                 }
             }
