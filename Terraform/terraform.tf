@@ -19,6 +19,7 @@ terraform {
   }
 }
 
+
 resource "aws_sqs_queue" "my_queue" {
   name                      = "nancyf-tf"
   delay_seconds             = 0
