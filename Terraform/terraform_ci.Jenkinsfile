@@ -20,7 +20,7 @@ pipeline {
                     dir('Terraform') {
 
                         sh "terraform init"
-                        sh 'terraform apply -auto-approve -var="telegram_token=${env.TELEGRAM_TOKEN}"'
+                        sh "terraform apply -auto-approve -var=\"telegram_token=${env.TELEGRAM_TOKEN}\""
                     }
                 }
             }
