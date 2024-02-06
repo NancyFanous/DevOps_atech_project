@@ -1,7 +1,14 @@
 provider "aws" {
   region = "eu-north-1"
 }
+terraform {
+  backend "s3" {
+ bucket = "nancy-bucket-1"
+ key    = "tfstate.json"
+ region = "eu-north-1"
+}
 
+}
 resource "aws_sqs_queue" "my_queue" {
   name                      = "nancyf-tf"
   delay_seconds             = 0
@@ -27,24 +34,6 @@ resource "aws_sqs_queue" "my_queue" {
   ]
 }
 EOF
-}
-
-variable "telegram_token" {
-  description = "Telegram Token for the bot"
-}
-
-resource "aws_secretsmanager_secret" "telegram_token_secret" {
-  name = "nancyf_telegram_token_tf"
-}
-
-
-resource "aws_secretsmanager_secret_version" "telegram_token_version" {
-  secret_id     = aws_secretsmanager_secret.telegram_token_secret.id
-  secret_string = <<EOT
-{
-  "TELEGRAM_TOKEN": "${var.telegram_token}"
-}
-EOT
 }
 
 
