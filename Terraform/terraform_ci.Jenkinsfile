@@ -1,5 +1,8 @@
 pipeline {
     agent any
+    environment {
+        TELEGRAM_TOKEN = credentials('telegram_token')
+    }
 
     stages {
         stage('Checkout') {
@@ -17,7 +20,7 @@ pipeline {
                     dir('Terraform') {
 
                         sh "terraform init"
-                        sh "terraform apply -auto-approve"
+                        sh 'terraform apply -auto-approve -var="telegram_token=${env.TELEGRAM_TOKEN}"'
                     }
                 }
             }
