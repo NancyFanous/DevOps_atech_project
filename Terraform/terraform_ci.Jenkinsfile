@@ -19,7 +19,7 @@ pipeline {
 
                     dir('Terraform') {
 
-                        sh "terraform init"
+                        sh "terraform init -upgrade"
                         sh "terraform apply -auto-approve -var=\"telegram_token=${env.TELEGRAM_TOKEN}\""
                     }
                 }
