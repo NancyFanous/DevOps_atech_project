@@ -11,7 +11,7 @@ app = flask.Flask(__name__)
 
 
 # TODO load TELEGRAM_TOKEN value from Secret Manager
-secret_name = "nancyf_telegram_token_tf"
+secret_name = "nancyf_telegram_token_terraform"
 client = boto3.client('secretsmanager', region_name='eu-north-1')
 response = client.get_secret_value(SecretId=secret_name)
 response_json = json.loads(response['SecretString'])
@@ -26,6 +26,10 @@ TELEGRAM_APP_URL = os.environ['TELEGRAM_APP_URL']
 @app.route('/', methods=['GET'])
 def index():
     return 'Ok'
+
+@app.route('/_healthz', methods=['GET'])
+def index():
+    return 'Ok' ,200
 
 @app.route(f'/{TELEGRAM_TOKEN}/', methods=['POST'])
 def webhook():
