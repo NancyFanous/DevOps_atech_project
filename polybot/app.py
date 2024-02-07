@@ -27,7 +27,7 @@ TELEGRAM_APP_URL = os.environ['TELEGRAM_APP_URL']
 def index():
     return 'Ok'
 
-@app.route('/_healthz', methods=['GET'])
+@app.route('/_healthz')
 def index():
     return 'Ok' ,200
 
