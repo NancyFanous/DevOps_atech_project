@@ -28,7 +28,7 @@ def index():
     return 'Ok'
 
 @app.route('/_healthz')
-def index():
+def health():
     return 'Ok' ,200
 
 @app.route(f'/{TELEGRAM_TOKEN}/', methods=['POST'])
